@@ -1,0 +1,9 @@
+{
+  "name": "FieldLink Spectre-Ultra",
+  "description": "High-fidelity CIA field operations system with advanced Director-level CRUD, cinematic atmospheric filters, and deep profile forgery engines.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}

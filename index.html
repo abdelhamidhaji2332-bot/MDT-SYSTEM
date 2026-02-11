@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIA CONTROL - Protocol Omega</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --obsidian: #010409;
+            --surface: #0a0f1e;
+            --accent: #10b981;
+            --accent-glow: rgba(16, 185, 129, 0.4);
+            --text-main: #8b949e;
+            --text-bright: #f0f6fc;
+            --bezel: rgba(255, 255, 255, 0.05);
+            --vignette-intensity: 0.3;
+            --bloom-intensity: 2px;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: var(--obsidian);
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+        }
+
+        /* --- ATMOSPHERE ENGINE --- */
+
+        /* Light Bloom */
+        .bloom-layer {
+            filter: blur(var(--bloom-intensity));
+            pointer-events: none;
+        }
+
+        /* Film Grain */
+        .noise-layer {
+            position: fixed; inset: 0;
+            background: url("https://grainy-gradients.vercel.app/noise.svg");
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* CRT Scanlines */
+        .crt-overlay {
+            position: fixed; inset: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+            background-size: 100% 4px, 4px 100%;
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        /* Dynamic Vignette */
+        .vignette-overlay {
+            position: fixed; inset: 0;
+            background: radial-gradient(circle, transparent 50%, rgba(0,0,0, var(--vignette-intensity)) 100%);
+            pointer-events: none;
+            z-index: 9997;
+            transition: all 1s ease;
+        }
+
+        /* Fog / Smoke Particles */
+        .fog-container {
+            position: fixed; inset: 0;
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 9996;
+            background: url('https://www.transparenttextures.com/patterns/dust.png');
+            animation: fogMove 60s linear infinite;
+        }
+
+        @keyframes fogMove {
+            from { background-position: 0 0; }
+            to { background-position: 1000px 1000px; }
+        }
+
+        /* Visual Modes */
+        body.mode-infrared {
+            --accent: #00ff00;
+            filter: sepia(1) hue-rotate(90deg) brightness(0.8) contrast(1.2);
+        }
+        body.mode-thermal {
+            filter: invert(1) hue-rotate(180deg) saturate(2) brightness(1.2);
+        }
+        body.mode-crisis {
+            filter: grayscale(1) contrast(1.5);
+            --vignette-intensity: 0.7;
+        }
+        body.mode-lockdown {
+            animation: flicker 0.15s infinite;
+            --accent: #ef4444;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.9; }
+            50% { opacity: 1; }
+            100% { opacity: 0.85; }
+        }
+
+        /* Tactical UI Details */
+        .hud-bracket { position: relative; }
+        .hud-bracket::before, .hud-bracket::after {
+            content: ''; position: absolute; width: 12px; height: 12px; border: 1px solid var(--accent);
+        }
+        .hud-bracket::before { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+        .hud-bracket::after { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+
+        .bezel-card {
+            background: rgba(10, 15, 30, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--bezel);
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+
+        /* Typography & Motion */
+        .typewriter {
+            overflow: hidden;
+            border-right: .15em solid var(--accent);
+            white-space: nowrap;
+            letter-spacing: .1em;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--accent); } }
+
+        /* Director Stamp Overlay */
+        .director-stamp {
+            position: fixed; top: 10%; right: 5%;
+            font-size: 5rem; font-weight: 900; color: rgba(255, 0, 0, 0.1);
+            border: 10px solid rgba(255, 0, 0, 0.1);
+            padding: 10px 30px; border-radius: 10px;
+            transform: rotate(15deg);
+            pointer-events: none; z-index: 50;
+            display: none;
+        }
+        body.role-director .director-stamp { display: block; }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.38.0"
+  }
+}
+</script>
+</head>
+<body class="role-analyst">
+    <div class="noise-layer"></div>
+    <div class="crt-overlay"></div>
+    <div class="vignette-overlay"></div>
+    <div class="fog-container"></div>
+    <div class="director-stamp">TOP SECRET</div>
+    <div id="root"></div>
+</body>
+</html>
