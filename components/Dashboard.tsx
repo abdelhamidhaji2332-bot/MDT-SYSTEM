@@ -2,14 +2,16 @@
 import React, { useState, useEffect } from 'react';
 import { User, POI } from '../types';
 import { getDailyBrief, getGeopoliticalPulse } from '../services/geminiService';
+import TacticalMap from './TacticalMap';
 
 interface DashboardProps {
   user: User;
+  users: User[];
   pois: POI[];
   onTriggerDominance: () => void;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ user, pois, onTriggerDominance }) => {
+const Dashboard: React.FC<DashboardProps> = ({ user, users, pois, onTriggerDominance }) => {
   const [aiBrief, setAiBrief] = useState<string>("INITIALIZING_SYSTEM_READ...");
   const [pulse, setPulse] = useState<{ text: string, sources: any[] }>({ text: "SCANNING_CHANNELS...", sources: [] });
   const [isLoading, setIsLoading] = useState(true);
@@ -111,6 +113,15 @@ const Dashboard: React.FC<DashboardProps> = ({ user, pois, onTriggerDominance })
                 ))}
               </div>
             </div>
+          </section>
+
+          {/* TACTICAL MAP */}
+          <section className="bezel-card p-8 bg-surface/80 border-accent/10">
+            <h3 className="text-[11px] font-black text-accent uppercase tracking-[0.3em] flex items-center gap-3 mb-8">
+                <div className="w-2 h-2 bg-accent rounded-full animate-pulse shadow-[0_0_10px_var(--accent-glow)]" />
+                Geospatial_Tactical_View
+            </h3>
+            <TacticalMap users={users} pois={pois} />
           </section>
 
           {/* ASSET STATUS GRID */}

@@ -56,7 +56,8 @@ export interface User {
   lastCheckIn?: string;
   specialization?: string;
   biometricIntegrity?: number;
-  threatLevel?: number; 
+  threatLevel?: number;
+  location?: { lat: number; lng: number };
 }
 
 export interface ReconImage {
@@ -84,6 +85,7 @@ export interface POI {
   audioLogs?: SecureAudio[];
   documents?: SecureFile[];
   notes?: string;
+  location?: { lat: number; lng: number };
 }
 
 export interface Mission {

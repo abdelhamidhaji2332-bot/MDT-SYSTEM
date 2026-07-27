@@ -148,7 +148,7 @@ const App: React.FC = () => {
       
       <main className={`flex-1 transition-all duration-300 md:ml-64 w-full relative`}>
         <div className={`pt-20 px-4 md:px-8 pb-32 w-full max-w-screen-2xl mx-auto transition-opacity duration-700 ${visualMode === 'stealth' ? 'opacity-40 grayscale' : 'opacity-100'}`}>
-          {activeTab === 'dashboard' && <Dashboard user={currentUser!} pois={pois} onTriggerDominance={() => setIsDominanceMode(true)} />}
+          {activeTab === 'dashboard' && <Dashboard user={currentUser!} users={users} pois={pois} onTriggerDominance={() => setIsDominanceMode(true)} />}
           {activeTab === 'mission' && <MissionControl missions={missions} agents={users} pois={pois} onAdd={m => setMissions([m, ...missions])} onUpdate={m => setMissions(missions.map(x => x.id === m.id ? m : x))} />}
           {activeTab === 'sigint' && <SignalIntelligence currentUser={currentUser!} />}
           {activeTab === 'mdt' && <MDTModule currentUser={currentUser!} onIncidentSubmit={(rep) => addAuditLog('Intel Filed', 'Report', rep.id)} isOffline={false} setIsOffline={() => {}} isSurvivalMode={visualMode === 'stealth'} />}

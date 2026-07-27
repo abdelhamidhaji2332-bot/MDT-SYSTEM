@@ -10,7 +10,8 @@ export const MOCK_USERS: User[] = [
     status: UserStatus.AVAILABLE,
     securityCode: 'F008F008',
     specialization: 'Command & Strategy',
-    biometricIntegrity: 100
+    biometricIntegrity: 100,
+    location: { lat: 37.43, lng: -122.09 }
   },
   { 
     id: 'u2', 
@@ -21,7 +22,8 @@ export const MOCK_USERS: User[] = [
     securityCode: 'PASS1234',
     lastCheckIn: '2023-10-27T10:00:00Z',
     specialization: 'Counter-Terrorism',
-    biometricIntegrity: 94
+    biometricIntegrity: 94,
+    location: { lat: 37.42, lng: -122.08 }
   },
   { 
     id: 'u3', 
@@ -31,7 +33,8 @@ export const MOCK_USERS: User[] = [
     status: UserStatus.OFF_DUTY,
     securityCode: 'PASS1234',
     specialization: 'Undercover Ops',
-    biometricIntegrity: 88
+    biometricIntegrity: 88,
+    location: { lat: 37.41, lng: -122.07 }
   },
   { 
     id: 'u4', 
@@ -41,7 +44,8 @@ export const MOCK_USERS: User[] = [
     status: UserStatus.AVAILABLE,
     securityCode: 'PASS1234',
     specialization: 'Signal Intel',
-    biometricIntegrity: 99
+    biometricIntegrity: 99,
+    location: { lat: 37.44, lng: -122.10 }
   },
   { 
     id: 'u5', 
@@ -51,7 +55,8 @@ export const MOCK_USERS: User[] = [
     status: UserStatus.AVAILABLE,
     securityCode: 'PASS1234',
     specialization: 'Forensics',
-    biometricIntegrity: 92
+    biometricIntegrity: 92,
+    location: { lat: 37.40, lng: -122.06 }
   },
 ];
 
@@ -67,7 +72,8 @@ export const MOCK_POIS: POI[] = [
     riskLevel: RiskLevel.CRITICAL,
     photoUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop',
     lastUpdated: '2023-10-25T14:30:00Z',
-    updatedBy: 'AGENT VANCE'
+    updatedBy: 'AGENT VANCE',
+    location: { lat: 37.425, lng: -122.085 }
   },
   {
     id: 'p2',
@@ -80,7 +86,8 @@ export const MOCK_POIS: POI[] = [
     riskLevel: RiskLevel.MEDIUM,
     photoUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop',
     lastUpdated: '2023-10-26T09:15:00Z',
-    updatedBy: 'AGENT ROSS'
+    updatedBy: 'AGENT ROSS',
+    location: { lat: 37.415, lng: -122.075 }
   }
 ];
 
