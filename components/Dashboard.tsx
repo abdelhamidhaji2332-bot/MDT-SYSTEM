@@ -101,7 +101,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, pois, onTriggerDominance })
             
             <div className="space-y-6">
               <div className="p-6 bg-black/60 border border-white/5 font-mono text-[11px] text-slate-400 leading-relaxed lowercase italic rounded-xl">
-                <span className="text-accent mr-2">>>></span> {pulse.text}
+                <span className="text-accent mr-2">&gt;&gt;&gt;</span> {pulse.text}
               </div>
               <div className="flex flex-wrap gap-3">
                 {pulse.sources.map((s, i) => (
